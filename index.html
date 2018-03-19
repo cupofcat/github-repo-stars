@@ -1,0 +1,54 @@
+<html>
+<head>
+	<meta http-equiv="refresh" content="600">
+	<script type="text/javascript">
+		var URL_REGEX = /(https?:\/\/[^ ]*)>/;
+
+		function setTotalStars(totalStars) {
+			document.getElementById("stars").innerHTML = totalStars;
+		}
+
+		function loadLastPage(lastPage, lastPageNum) {
+			fetch(lastPage).then(function(response) {
+					return response.json()
+				}
+			).then(function(json) {
+					setTotalStars((lastPageNum-1) * 30 + json.length);
+				}
+			).catch(function(error) {
+					console.log(error);
+				}
+			)
+		}
+
+		function processFirstPage(response) {
+			var link = response.headers.get("link");
+			var lastPage = link.split(",")[1].match(URL_REGEX)[1];
+			var lastPageNum = lastPage.split("?")[1].split("=")[1];
+			loadLastPage(lastPage, lastPageNum);
+			return response.json()
+		}
+
+		function onPageLoaded(event) {
+			var repo = window.location.href.split("?")[1];
+			document.getElementById("repo").innerHTML = repo;
+			var url = 'https://api.github.com/repos/' + repo + '/stargazers';
+
+			fetch(url).then(processFirstPage)
+			.catch(function(error) {
+				console.log(error);
+			})
+		}
+
+		document.addEventListener("DOMContentLoaded", onPageLoaded);
+
+	</script>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+	<div id="box">
+		<div id="repo">...</div>
+		<div id="stars-wrapper">★<span id="stars">...</span></div>
+	</div>
+</body>
+</html>

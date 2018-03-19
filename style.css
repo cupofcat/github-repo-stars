@@ -1,0 +1,15 @@
+body {
+	margin: 0;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	font-family: Roboto;
+	font-weight: 100;
+}
+div#repo {
+	text-align: center;
+	font-size: 6em;
+}
+div#stars-wrapper {
+	font-size: 30em;
+}
