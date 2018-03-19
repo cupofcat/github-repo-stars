@@ -3,6 +3,7 @@
 	<meta http-equiv="refresh" content="600">
 	<script type="text/javascript">
 		var URL_REGEX = /(https?:\/\/[^ ]*)>/;
+		var STARGAZER_PER_PAGE = 30;
 
 		function setTotalStars(totalStars) {
 			document.getElementById("stars").innerHTML = totalStars;
@@ -13,7 +14,7 @@
 					return response.json()
 				}
 			).then(function(json) {
-					setTotalStars((lastPageNum-1) * 30 + json.length);
+					setTotalStars((lastPageNum-1) * STARGAZER_PER_PAGE + json.length);
 				}
 			).catch(function(error) {
 					console.log(error);
