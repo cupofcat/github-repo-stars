@@ -6,10 +6,26 @@ body {
 	font-family: Roboto;
 	font-weight: 100;
 }
+div#box {
+	text-align: center;
+}
 div#repo {
 	text-align: center;
 	font-size: 6em;
 }
 div#stars-wrapper {
 	font-size: 30em;
+}
+div.stargazer {
+	text-align: center;
+	font-size: 2.3em;
+	display: inline-block;
+}
+div.stargazer img {
+	width: 1em;
+	height: 1em;
+	margin-right: 0.25em;
+}
+div.stargazer:not(:first-child) {
+	margin-left: 1.25em;
 }

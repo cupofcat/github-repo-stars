@@ -9,12 +9,23 @@
 			document.getElementById("stars").innerHTML = totalStars;
 		}
 
+		function setRecentStargazer(gazers) {
+			var numbers = new Array("first", "second", "third", "fourth", "fith");
+			for (var i = 0; i < gazers.length; i++) {
+				document.getElementById(numbers[gazers.length - 1 - i] + "-login").innerHTML = gazers[i].login;
+				document.getElementById(numbers[gazers.length - 1 - i] + "-avatar").src = gazers[i].avatar_url;
+			}
+		}
+
 		function loadLastPage(lastPage, lastPageNum) {
 			fetch(lastPage).then(function(response) {
 					return response.json()
 				}
 			).then(function(json) {
 					setTotalStars((lastPageNum-1) * STARGAZER_PER_PAGE + json.length);
+					setRecentStargazer(json.slice(-5));
+					console.log(json[json.length-1].login);
+					console.log(json[json.length-1].avatar_url);
 				}
 			).catch(function(error) {
 					console.log(error);
@@ -49,7 +60,16 @@
 <body>
 	<div id="box">
 		<div id="repo">...</div>
-		<div id="stars-wrapper">★<span id="stars">...</span></div>
+		<div id="stars-wrapper">
+			<span id="star">★</span><span id="stars">...</span>
+		</div>
+		<div id="recent_stargazers">
+			<div class="stargazer"><img src="" id="first-avatar"></img><span id="first-login"></span></div>
+			<div class="stargazer"><img src="" id="second-avatar"></img><span id="second-login"></span></div>
+			<div class="stargazer"><img src="" id="third-avatar"></img><span id="third-login"></span></div>
+			<div class="stargazer"><img src="" id="fourth-avatar"></img><span id="fourth-login"></span></div>
+			<div class="stargazer"><img src="" id="fith-avatar"></img><span id="fith-login"></span></div>
+		</div>
 	</div>
 </body>
 </html>
