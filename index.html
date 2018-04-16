@@ -1,9 +1,13 @@
 <html>
 <head>
 	<meta http-equiv="refresh" content="600">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<script type="text/javascript">
 		var URL_REGEX = /(https?:\/\/[^ ]*)>/;
 		var STARGAZER_PER_PAGE = 30;
+		var FETCH_INIT = { cache: 'no-store' };
 
 		function setTotalStars(totalStars) {
 			document.getElementById("stars").innerHTML = totalStars;
@@ -18,7 +22,7 @@
 		}
 
 		function loadLastPage(lastPage, lastPageNum) {
-			fetch(lastPage).then(function(response) {
+			fetch(lastPage, FETCH_INIT).then(function(response) {
 					return response.json()
 				}
 			).then(function(json) {
@@ -46,7 +50,7 @@
 			document.getElementById("repo").innerHTML = repo;
 			var url = 'https://api.github.com/repos/' + repo + '/stargazers';
 
-			fetch(url).then(processFirstPage)
+			fetch(url, FETCH_INIT).then(processFirstPage)
 			.catch(function(error) {
 				console.log(error);
 			})
